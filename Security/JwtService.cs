@@ -25,7 +25,7 @@ public class JwtService : IJwtService
     public JwtResult CreateTokens(IEnumerable<Claim> claims, string? userId = null)
     {
         var now = DateTime.UtcNow;
-        var keyBytes = Encoding.UTF8.GetBytes(_opts.Key);
+        var keyBytes = Encoding.UTF8.GetBytes(_opts.Secret);
         var signingKey = new SymmetricSecurityKey(keyBytes);
         var creds = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
@@ -33,7 +33,7 @@ public class JwtService : IJwtService
         if (!string.IsNullOrEmpty(userId) && !jwtClaims.Any(c => c.Type == ClaimTypes.NameIdentifier))
             jwtClaims.Add(new Claim(ClaimTypes.NameIdentifier, userId));
 
-        var accessExp = now.AddMinutes(_opts.AccessTokenExpirationMinutes);
+        var accessExp = now.AddMinutes(_opts.ExpiryMinutes);
         var jwt = new JwtSecurityToken(
             issuer: _opts.Issuer,
             audience: _opts.Audience,
@@ -47,7 +47,7 @@ public class JwtService : IJwtService
 
         // refresh token - here simple random string, store hashed in DB/Redis
         var refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
-        var refreshExp = now.AddDays(_opts.RefreshTokenExpirationDays);
+        var refreshExp = now.AddDays(_opts.RefreshTokenExpiryDays);
 
         return new JwtResult
         {
@@ -60,7 +60,7 @@ public class JwtService : IJwtService
 
     public ClaimsPrincipal? ValidateToken(string token, bool validateLifetime = true)
     {
-        var keyBytes = Encoding.UTF8.GetBytes(_opts.Key);
+        var keyBytes = Encoding.UTF8.GetBytes(_opts.Secret);
         var signingKey = new SymmetricSecurityKey(keyBytes);
         var parameters = new TokenValidationParameters
         {

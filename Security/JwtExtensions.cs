@@ -18,7 +18,16 @@ public static class JwtExtensions
         var options = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
                       ?? throw new InvalidOperationException("Jwt config missing");
 
-        var keyBytes = Convert.FromBase64String(options.Key);
+            byte[] keyBytes;
+            // Accept either base64-encoded string or raw secret string
+            try
+            {
+                keyBytes = Convert.FromBase64String(options.Secret);
+            }
+            catch
+            {
+                keyBytes = System.Text.Encoding.UTF8.GetBytes(options.Secret);
+            }
         var signingKey = new SymmetricSecurityKey(keyBytes);
 
         services.AddAuthentication(options =>
