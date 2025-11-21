@@ -1,4 +1,3 @@
-// JwtOptions.cs
 namespace Genzy.Base.Security.Jwt;
 
 public class JwtOptions
