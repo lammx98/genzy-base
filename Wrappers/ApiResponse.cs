@@ -21,7 +21,7 @@ namespace Genzy.Base.Wrappers
             Error = error;
         }
 
-        public static ApiResponse<T> New(T data, string? message = null) => new(data, message);
+        public static ApiResponse<T> New(T? data, string? message = null) => new(data, message);
         public static ApiResponse<T> Fail(string? message, object? error = null) => new(message, error);
     }
 
