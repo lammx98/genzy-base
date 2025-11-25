@@ -12,7 +12,7 @@ public interface IUserContext
     IReadOnlyList<string> Roles { get; }
 }
 
-public class MutableUserContext : IUserContext
+public class UserContext : IUserContext
 {
     public bool IsAuthenticated { get; set; }
     public string? UserId { get; set; }
@@ -21,14 +21,9 @@ public class MutableUserContext : IUserContext
     public IReadOnlyList<string> Roles => RolesInternal;
 }
 
-public class UserContextMiddleware : IMiddleware
+public class UserContextMiddleware(UserContext context) : IMiddleware
 {
-    private readonly MutableUserContext _context;
-
-    public UserContextMiddleware(MutableUserContext context)
-    {
-        _context = context;
-    }
+    private readonly UserContext _context = context;
 
     public async Task InvokeAsync(HttpContext httpContext, RequestDelegate next)
     {
@@ -54,8 +49,8 @@ public static class UserContextServiceCollectionExtensions
 {
     public static IServiceCollection AddUserContext(this IServiceCollection services)
     {
-        services.AddScoped<MutableUserContext>();
-        services.AddScoped<IUserContext>(sp => sp.GetRequiredService<MutableUserContext>());
+        services.AddScoped<UserContext>();
+        services.AddScoped<IUserContext>(sp => sp.GetRequiredService<UserContext>());
         services.AddScoped<UserContextMiddleware>();
         return services;
     }

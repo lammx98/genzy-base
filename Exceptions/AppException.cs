@@ -6,6 +6,12 @@ namespace Genzy.Base.Exceptions
         public object? Detail { get; set; }
 
         public AppException() { }
+        public AppException(string message, object? detail = null)
+        : base(message)
+        {
+            ErrorCode = 500;
+            Detail = detail;
+        }
 
         public AppException(int? errorCode, string? message, object? detail = null) : base(message)
         {
