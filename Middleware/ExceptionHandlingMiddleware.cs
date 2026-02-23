@@ -98,10 +98,9 @@ namespace Genzy.Base.Middleware
 
         private (int statusCode, ApiResponse response) HandleGenericException(Exception exception)
         {
-            var statusCode = (int)HttpStatusCode.InternalServerError;
-            
+
             // Determine status code based on exception type
-            statusCode = exception switch
+            int statusCode = exception switch
             {
                 UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized,
                 ArgumentNullException => (int)HttpStatusCode.BadRequest,
