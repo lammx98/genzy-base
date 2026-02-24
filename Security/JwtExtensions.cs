@@ -44,10 +44,29 @@ public static class JwtExtensions
                 ValidIssuer = options.Issuer,
                 ValidAudience = options.Audience
             };
-            cfg.Events = new JwtBearerEvents
+            
+            // Setup default logging events - only log errors, will be merged with custom configure if provided
+            var defaultEvents = new JwtBearerEvents
             {
-                OnAuthenticationFailed = ctx => Task.CompletedTask
+                OnAuthenticationFailed = ctx =>
+                {
+                    Console.WriteLine($"[JWT] Authentication failed: {ctx.Exception.GetType().Name} - {ctx.Exception.Message}");
+                    if (ctx.Exception.InnerException != null)
+                    {
+                        Console.WriteLine($"[JWT] Inner exception: {ctx.Exception.InnerException.Message}");
+                    }
+                    return Task.CompletedTask;
+                },
+                OnChallenge = ctx =>
+                {
+                    Console.WriteLine($"[JWT] Challenge: Error={ctx.Error}, ErrorDescription={ctx.ErrorDescription}");
+                    return Task.CompletedTask;
+                }
             };
+            
+            cfg.Events = defaultEvents;
+            
+            // Allow custom configuration to override or extend events
             configure?.Invoke(cfg);
         });
     }
