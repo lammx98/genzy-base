@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text.Json;
 using Genzy.Base.Exceptions;
+using Genzy.Base.Json;
 using Genzy.Base.Wrappers;
 
 namespace Genzy.Base.Middleware
