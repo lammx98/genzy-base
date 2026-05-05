@@ -29,5 +29,8 @@ namespace Genzy.Base.Wrappers
     {
         public ApiResponse(object? data = null, string? message = null) : base(data, message) { }
         public ApiResponse(string? message, object? error = null) : base(message, error) { }
+
+        public static ApiResponse<PagedResult<T>> Paged<T>(PagedResult<T> data, string? message = null)
+            => ApiResponse<PagedResult<T>>.New(data, message);
     }
 }

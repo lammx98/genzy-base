@@ -9,14 +9,19 @@ public interface IUserContext
     bool IsAuthenticated { get; }
     string? UserId { get; }
     string? Email { get; }
+    /// <summary>Current workspace / organization id (JWT claim tenant_id).</summary>
+    string? TenantId { get; }
     IReadOnlyList<string> Roles { get; }
 }
 
 public class UserContext : IUserContext
 {
+    public const string TenantIdClaimType = "tenant_id";
+
     public bool IsAuthenticated { get; set; }
     public string? UserId { get; set; }
     public string? Email { get; set; }
+    public string? TenantId { get; set; }
     public List<string> RolesInternal { get; } = new();
     public IReadOnlyList<string> Roles => RolesInternal;
 }
@@ -34,11 +39,19 @@ public class UserContextMiddleware(UserContext context) : IMiddleware
             _context.UserId = principal?.FindFirst(ClaimTypes.NameIdentifier)?.Value
                                ?? principal?.FindFirst("sub")?.Value;
             _context.Email = principal?.FindFirst(ClaimTypes.Email)?.Value;
+            _context.TenantId = principal?.FindFirst(UserContext.TenantIdClaimType)?.Value;
             _context.RolesInternal.Clear();
             foreach (var c in principal?.FindAll(ClaimTypes.Role) ?? Array.Empty<Claim>())
             {
                 _context.RolesInternal.Add(c.Value);
             }
+        }
+        else
+        {
+            _context.UserId = null;
+            _context.Email = null;
+            _context.TenantId = null;
+            _context.RolesInternal.Clear();
         }
 
         await next(httpContext);
