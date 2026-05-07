@@ -5,7 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Genzy.Base.Extensions;
 
 /// <summary>
-/// Extension methods for JSON serialization configuration.
+/// Extension methods for JSON serialization configuration (ulong / ulong? as JSON strings).
+/// Pair with <see cref="SnowflakeOpenApiExtensions"/> for matching OpenAPI/Swagger schemas.
 /// </summary>
 public static class JsonServiceExtensions
 {
