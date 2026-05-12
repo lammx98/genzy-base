@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Genzy.Base.Exceptions;
 using Genzy.Base.Wrappers;
 
 namespace Genzy.Base.Middleware
@@ -30,9 +31,10 @@ namespace Genzy.Base.Middleware
         public bool IncludeJsonIndentation { get; set; } = false;
 
         /// <summary>
-        /// Custom function to map internal error codes to HTTP status codes
+        /// When set, return value overrides HTTP status inferred from <see cref="Exception"/> type for <see cref="AppException"/> (and subclasses).
+        /// Return null to keep the default status for that exception type.
         /// </summary>
-        public Func<int, int>? ErrorCodeMapper { get; set; }
+        public Func<AppException, int?>? HttpStatusCodeOverride { get; set; }
 
         /// <summary>
         /// Custom exception handler that can modify the response before it's sent

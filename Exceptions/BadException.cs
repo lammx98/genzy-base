@@ -1,9 +1,24 @@
 namespace Genzy.Base.Exceptions
+
 {
+
     public class BadException : AppException
+
     {
-        public BadException() { }
-        public BadException(string message = "Bad Request", object? detail = null)
-        : base(400, message, detail) { }
+
+        public BadException() : base(AppErrorCodes.BadRequest, "Bad Request", null) { }
+
+
+
+        public BadException(string message) : base(AppErrorCodes.BadRequest, message, null) { }
+
+
+
+        public BadException(string? errorCode, string? message, object? detail = null)
+
+            : base(errorCode ?? AppErrorCodes.BadRequest, message ?? "Bad Request", detail) { }
+
     }
+
 }
+

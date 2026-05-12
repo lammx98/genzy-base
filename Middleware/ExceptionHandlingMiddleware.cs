@@ -47,10 +47,8 @@ namespace Genzy.Base.Middleware
                 _ => HandleGenericException(exception)
             };
 
-            // Log the exception
             LogException(exception, statusCode, context);
 
-            // Allow custom exception handler to modify response
             if (_options.CustomExceptionHandler != null)
             {
                 var customResult = await _options.CustomExceptionHandler(context, exception, statusCode, response);
@@ -60,7 +58,6 @@ namespace Genzy.Base.Middleware
                 }
             }
 
-            // Set response
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;
 
@@ -74,64 +71,100 @@ namespace Genzy.Base.Middleware
             await context.Response.WriteAsync(json);
         }
 
+        private static int GetHttpStatusForAppException(AppException ex) => ex switch
+        {
+            BadException => (int)HttpStatusCode.BadRequest,
+            ValidationException => (int)HttpStatusCode.BadRequest,
+            UnauthorizedException => (int)HttpStatusCode.Unauthorized,
+            ForbiddenException => (int)HttpStatusCode.Forbidden,
+            NotFoundException => (int)HttpStatusCode.NotFound,
+            _ => (int)HttpStatusCode.InternalServerError
+        };
+
         private (int statusCode, ApiResponse response) HandleAppException(AppException appException)
         {
-            var statusCode = appException.ErrorCode;
+            var statusCode = GetHttpStatusForAppException(appException);
+            if (_options.HttpStatusCodeOverride?.Invoke(appException) is { } overridden)
+                statusCode = overridden;
 
-            // Map error code to HTTP status code if needed
-            if (_options.ErrorCodeMapper != null)
+            object errorDetail;
+            if (_options.IncludeExceptionDetails)
             {
-                statusCode = _options.ErrorCodeMapper(appException.ErrorCode);
-            }
-
-            var errorDetail = _options.IncludeExceptionDetails
-                ? new
+                errorDetail = new
                 {
-                    Type = appException.GetType().Name,
                     ErrorCode = appException.ErrorCode,
                     Detail = appException.Detail,
+                    Type = appException.GetType().Name,
                     StackTrace = _options.IncludeStackTrace ? appException.StackTrace : null
-                }
-                : appException.Detail;
+                };
+            }
+            else
+            {
+                errorDetail = new
+                {
+                    ErrorCode = appException.ErrorCode,
+                    Detail = appException.Detail
+                };
+            }
 
             return (statusCode, new ApiResponse(appException.Message, errorDetail));
         }
 
+        private static int GetHttpStatusForGenericException(Exception exception) => exception switch
+        {
+            UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized,
+            ArgumentNullException => (int)HttpStatusCode.BadRequest,
+            ArgumentException => (int)HttpStatusCode.BadRequest,
+            InvalidOperationException => (int)HttpStatusCode.BadRequest,
+            NotImplementedException => (int)HttpStatusCode.NotImplemented,
+            TimeoutException => (int)HttpStatusCode.RequestTimeout,
+            _ => (int)HttpStatusCode.InternalServerError
+        };
+
+        private static string? GetErrorCodeForGenericException(Exception exception) => exception switch
+        {
+            UnauthorizedAccessException => AppErrorCodes.UnauthorizedAccess,
+            ArgumentNullException => AppErrorCodes.ArgumentNull,
+            ArgumentException => AppErrorCodes.ArgumentInvalid,
+            InvalidOperationException => AppErrorCodes.InvalidOperation,
+            NotImplementedException => AppErrorCodes.NotImplemented,
+            TimeoutException => AppErrorCodes.Timeout,
+            _ => AppErrorCodes.InternalError
+        };
+
         private (int statusCode, ApiResponse response) HandleGenericException(Exception exception)
         {
-
-            // Determine status code based on exception type
-            int statusCode = exception switch
-            {
-                UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized,
-                ArgumentNullException => (int)HttpStatusCode.BadRequest,
-                ArgumentException => (int)HttpStatusCode.BadRequest,
-                InvalidOperationException => (int)HttpStatusCode.BadRequest,
-                NotImplementedException => (int)HttpStatusCode.NotImplemented,
-                TimeoutException => (int)HttpStatusCode.RequestTimeout,
-                _ => (int)HttpStatusCode.InternalServerError
-            };
+            var statusCode = GetHttpStatusForGenericException(exception);
 
             var message = _options.ExposeGenericExceptionMessages
                 ? exception.Message
                 : "An error occurred while processing your request.";
 
-            var errorDetail = _options.IncludeExceptionDetails
-                ? new
+            var errorCode = GetErrorCodeForGenericException(exception);
+
+            object errorDetail;
+            if (_options.IncludeExceptionDetails)
+            {
+                errorDetail = new
                 {
+                    ErrorCode = errorCode,
                     Type = exception.GetType().Name,
                     Message = exception.Message,
                     StackTrace = _options.IncludeStackTrace ? exception.StackTrace : null,
                     InnerException = exception.InnerException?.Message
-                }
-                : (object?)null;
+                };
+            }
+            else
+            {
+                errorDetail = new { ErrorCode = errorCode };
+            }
 
             return (statusCode, new ApiResponse(message, errorDetail));
         }
 
         private void LogException(Exception exception, int statusCode, HttpContext context)
         {
-            var logLevel = statusCode >= 500 ? LogLevel.Error : LogLevel.Warning;
+            var logLevel = ResolveLogLevel(exception, statusCode);
 
             if (_options.CustomLogger != null)
             {
@@ -149,6 +182,23 @@ namespace Genzy.Base.Middleware
                     statusCode
                 );
             }
+        }
+
+        private static LogLevel ResolveLogLevel(Exception exception, int statusCode)
+        {
+            return exception switch
+            {
+                NotFoundException => LogLevel.Information,
+                BadException or ValidationException => LogLevel.Warning,
+                UnauthorizedException or ForbiddenException => LogLevel.Warning,
+                UnauthorizedAccessException => LogLevel.Warning,
+                ArgumentNullException or ArgumentException or InvalidOperationException => LogLevel.Warning,
+                TimeoutException => LogLevel.Warning,
+                NotImplementedException => LogLevel.Warning,
+                AppException => statusCode >= 500 ? LogLevel.Error : LogLevel.Warning,
+                _ when statusCode >= 500 => LogLevel.Error,
+                _ => LogLevel.Warning
+            };
         }
     }
 }

@@ -2,8 +2,11 @@ namespace Genzy.Base.Exceptions
 {
     public class ForbiddenException : AppException
     {
-        public ForbiddenException() { }
-        public ForbiddenException(string message = "Forbidden", object? detail = null)
-            : base(403, message, detail) { }
+        public ForbiddenException() : base(AppErrorCodes.Forbidden, "Forbidden", null) { }
+
+        public ForbiddenException(string message) : base(AppErrorCodes.Forbidden, message, null) { }
+
+        public ForbiddenException(string? errorCode, string? message, object? detail = null)
+            : base(errorCode ?? AppErrorCodes.Forbidden, message ?? "Forbidden", detail) { }
     }
 }
