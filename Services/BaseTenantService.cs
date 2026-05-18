@@ -23,6 +23,13 @@ public abstract class BaseTenantService(IUserContext userContext)
         return query.Where(e => e.TenantId == tenantId);
     }
 
+    /// <summary>Tenant-owned rows only (excludes system catalog rows with null <see cref="ITenantScopedWithSharedRows.TenantId"/>).</summary>
+    protected IQueryable<T> ForCurrentTenantOnly<T>(IQueryable<T> query) where T : class, ITenantScopedWithSharedRows
+    {
+        var tenantId = RequireTenantId();
+        return query.Where(e => e.TenantId == tenantId);
+    }
+
     /// <summary>
     /// Disables EF global tenant query filters and the strict DB command guard for nested work (AsyncLocal).
     /// For a single LINQ chain, prefer <c>IgnoreQueryFilters()</c> (note: that does not disable the command guard—use this scope or <see cref="IUserContext.BypassTenantQueryFilter"/> when tenant is absent).

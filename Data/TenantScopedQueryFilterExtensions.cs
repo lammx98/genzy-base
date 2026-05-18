@@ -10,9 +10,13 @@ public static class TenantScopedQueryFilterExtensions
         typeof(TenantScopedQueryFilterExtensions).GetMethod(nameof(SetTenantFilter), BindingFlags.NonPublic | BindingFlags.Static)
         ?? throw new InvalidOperationException(nameof(SetTenantFilter));
 
+    private static readonly MethodInfo SetSharedRowsTenantFilterMethod =
+        typeof(TenantScopedQueryFilterExtensions).GetMethod(nameof(SetSharedRowsTenantFilter), BindingFlags.NonPublic | BindingFlags.Static)
+        ?? throw new InvalidOperationException(nameof(SetSharedRowsTenantFilter));
+
     /// <summary>
-    /// Applies a global query filter to every mapped CLR type that implements <see cref="ITenantScoped"/>,
-    /// except types marked with <see cref="SkipTenantQueryFilterAttribute"/>.
+    /// Applies a global query filter to every mapped CLR type that implements <see cref="ITenantScoped"/>
+    /// or <see cref="ITenantScopedWithSharedRows"/>, except types marked with <see cref="SkipTenantQueryFilterAttribute"/>.
     /// </summary>
     public static void ApplyTenantScopedQueryFilters(this ModelBuilder modelBuilder, ITenantGlobalQueryFilterContext filterContext)
     {
@@ -25,10 +29,22 @@ public static class TenantScopedQueryFilterExtensions
                 continue;
 
             var clr = entityType.ClrType;
-            if (clr is null || !typeof(ITenantScoped).IsAssignableFrom(clr))
+            if (clr is null)
                 continue;
 
             if (Attribute.IsDefined(clr, typeof(SkipTenantQueryFilterAttribute), inherit: false))
+                continue;
+
+            if (typeof(ITenantScopedWithSharedRows).IsAssignableFrom(clr))
+            {
+                if (Attribute.IsDefined(clr, typeof(SharedCatalogEntityAttribute), inherit: false))
+                    continue;
+
+                SetSharedRowsTenantFilterMethod.MakeGenericMethod(clr).Invoke(null, [modelBuilder, filterContext]);
+                continue;
+            }
+
+            if (!typeof(ITenantScoped).IsAssignableFrom(clr))
                 continue;
 
             SetTenantFilterMethod.MakeGenericMethod(clr).Invoke(null, [modelBuilder, filterContext]);
@@ -44,5 +60,15 @@ public static class TenantScopedQueryFilterExtensions
             || (ctx.TenantIdForGlobalQueryFilter != null
                 && ctx.TenantIdForGlobalQueryFilter > 0
                 && e.TenantId == ctx.TenantIdForGlobalQueryFilter));
+    }
+
+    private static void SetSharedRowsTenantFilter<TEntity>(ModelBuilder modelBuilder, ITenantGlobalQueryFilterContext ctx)
+        where TEntity : class, ITenantScopedWithSharedRows
+    {
+        modelBuilder.Entity<TEntity>().HasQueryFilter(e =>
+            ctx.IsTenantQueryFilterSuppressed
+            || (ctx.TenantIdForGlobalQueryFilter != null
+                && ctx.TenantIdForGlobalQueryFilter > 0
+                && (e.TenantId == null || e.TenantId == ctx.TenantIdForGlobalQueryFilter)));
     }
 }

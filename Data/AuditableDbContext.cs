@@ -59,6 +59,22 @@ public abstract class AuditableDbContext<T>(
 
             entry.Entity.TenantId = tenantId.Value;
         }
+
+        foreach (var entry in ChangeTracker.Entries<ITenantScopedWithSharedRows>())
+        {
+            if (entry.State is not (EntityState.Added or EntityState.Modified))
+                continue;
+
+            // null = system catalog row; > 0 = tenant row already set.
+            if (entry.Entity.TenantId is null or > 0)
+                continue;
+
+            if (tenantId is null or 0)
+                throw new InvalidOperationException(
+                    "Cannot save tenant-scoped entity without TenantId or authenticated tenant context.");
+
+            entry.Entity.TenantId = tenantId.Value;
+        }
     }
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
