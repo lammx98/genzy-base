@@ -1,4 +1,4 @@
-namespace Genzy.Base.Models;
+namespace GCL.Base.Models;
 
 /// <summary>
 /// Tenant-owned rows plus optional system-wide catalog rows (<see cref="TenantId"/> null).

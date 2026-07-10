@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Genzy.Base.Attributes;
+namespace GCL.Base.Attributes;
 
 [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
 public sealed class EnumStringAttribute(string value) : Attribute

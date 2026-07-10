@@ -1,8 +1,8 @@
 using System.Text.Json;
-using Genzy.Base.Json;
+using GCL.Base.Json;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Genzy.Base.Extensions;
+namespace GCL.Base.Extensions;
 
 /// <summary>
 /// Extension methods for JSON serialization configuration (ulong / ulong? as JSON strings).

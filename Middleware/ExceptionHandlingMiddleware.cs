@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text.Json;
-using Genzy.Base.Exceptions;
-using Genzy.Base.Json;
-using Genzy.Base.Wrappers;
+using GCL.Base.Exceptions;
+using GCL.Base.Json;
+using GCL.Base.Wrappers;
 
-namespace Genzy.Base.Middleware
+namespace GCL.Base.Middleware
 {
     /// <summary>
     /// Middleware for handling all exceptions globally and returning consistent API responses

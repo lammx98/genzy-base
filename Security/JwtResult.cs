@@ -1,5 +1,5 @@
 // TokenResult.cs
-namespace Genzy.Base.Security.Jwt;
+namespace GCL.Base.Security.Jwt;
 public class JwtResult
 {
     public string AccessToken { get; set; } = null!;

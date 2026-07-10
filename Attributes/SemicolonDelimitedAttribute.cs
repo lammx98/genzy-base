@@ -1,4 +1,4 @@
-namespace Genzy.Base.Attributes;
+namespace GCL.Base.Attributes;
 
 /// <summary>
 /// Marks a string[] property to be stored as delimiter-separated string in the database.

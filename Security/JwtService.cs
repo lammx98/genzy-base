@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Genzy.Base.Security.Jwt;
+namespace GCL.Base.Security.Jwt;
 
 public interface IJwtService
 {

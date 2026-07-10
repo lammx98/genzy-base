@@ -1,4 +1,4 @@
-namespace Genzy.Base.DTO;
+namespace GCL.Base.DTO;
 
 /// <summary>
 /// DTO dùng chung cho danh sách lựa chọn (dropdown/options): id và name.

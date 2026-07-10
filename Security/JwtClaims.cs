@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace Genzy.Security.Jwt;
+namespace GCL.Base.Security.Jwt;
 
 public static class ClaimHelpers
 {

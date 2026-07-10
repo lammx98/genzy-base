@@ -1,8 +1,8 @@
-using Genzy.Base.Utils;
+using GCL.Base.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Genzy.Base.Extensions;
+namespace GCL.Base.Extensions;
 
 public static class SnowflakeServiceCollectionExtensions
 {

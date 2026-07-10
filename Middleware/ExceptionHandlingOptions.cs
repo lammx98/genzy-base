@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Genzy.Base.Exceptions;
-using Genzy.Base.Wrappers;
+using GCL.Base.Exceptions;
+using GCL.Base.Wrappers;
 
-namespace Genzy.Base.Middleware
+namespace GCL.Base.Middleware
 {
     /// <summary>
     /// Configuration options for the exception handling middleware

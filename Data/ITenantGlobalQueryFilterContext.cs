@@ -1,8 +1,8 @@
-namespace Genzy.Base.Data;
+namespace GCL.Base.Data;
 
 /// <summary>
 /// Supplies values evaluated at query time for <see cref="TenantScopedQueryFilterExtensions"/>.
-/// <see cref="IsTenantQueryFilterSuppressed"/> includes <see cref="TenantQueryFilterScope"/> and <see cref="Genzy.Base.Security.IUserContext.BypassTenantQueryFilter"/>.
+/// <see cref="IsTenantQueryFilterSuppressed"/> includes <see cref="TenantQueryFilterScope"/> and <see cref="GCL.Base.Security.IUserContext.BypassTenantQueryFilter"/>.
 /// </summary>
 public interface ITenantGlobalQueryFilterContext
 {

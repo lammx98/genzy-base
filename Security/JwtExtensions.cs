@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 
-namespace Genzy.Base.Security.Jwt;
+namespace GCL.Base.Security.Jwt;
 
 public static class JwtExtensions
 {

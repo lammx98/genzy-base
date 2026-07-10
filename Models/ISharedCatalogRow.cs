@@ -1,4 +1,4 @@
-namespace Genzy.Base.Models;
+namespace GCL.Base.Models;
 
 /// <summary>
 /// Shared-catalog row (tenant-owned or system-wide with null <see cref="ITenantScopedWithSharedRows.TenantId"/>).

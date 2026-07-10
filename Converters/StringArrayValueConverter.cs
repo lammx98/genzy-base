@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Genzy.Base.Converters;
+namespace GCL.Base.Converters;
 
 /// <summary>
 /// Converts string[] to/from JSON string for DB storage.

@@ -1,4 +1,4 @@
-namespace Genzy.Base.Services
+namespace GCL.Base.Services
 {
     public interface IBaseService<T> where T : class
     {

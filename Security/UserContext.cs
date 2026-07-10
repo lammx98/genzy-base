@@ -1,9 +1,9 @@
 using System.Security.Claims;
-using Genzy.Base.Data;
+using GCL.Base.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Genzy.Base.Security;
+namespace GCL.Base.Security;
 
 public interface IUserContext
 {

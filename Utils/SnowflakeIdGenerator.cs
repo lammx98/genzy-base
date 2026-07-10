@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Options;
 
-namespace Genzy.Base.Utils;
+namespace GCL.Base.Utils;
 
 public class SnowflakeOptions
 {

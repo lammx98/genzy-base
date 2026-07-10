@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Genzy.Base.Data;
+namespace GCL.Base.Data;
 
 public class BaseDbContext<T>(DbContextOptions<T> options) : DbContext(options)
     where T : DbContext

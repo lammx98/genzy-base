@@ -1,4 +1,4 @@
-namespace Genzy.Base.Models;
+namespace GCL.Base.Models;
 
 /// <summary>
 /// Marks a <see cref="ITenantScopedWithSharedRows"/> entity whose global query filter is applied by the host <see cref="Microsoft.EntityFrameworkCore.DbContext"/>

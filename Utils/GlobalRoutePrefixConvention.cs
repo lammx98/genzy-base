@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace Genzy.Base.Utils;
+namespace GCL.Base.Utils;
 
 public class GlobalRoutePrefixConvention : IApplicationModelConvention
 {

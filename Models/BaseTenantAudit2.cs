@@ -1,4 +1,4 @@
-namespace Genzy.Base.Models;
+namespace GCL.Base.Models;
 
 /// <summary>Audit fields (including actor ids) + tenant scope.</summary>
 public abstract class BaseTenantAudit2 : BaseAudit2, ITenantScoped

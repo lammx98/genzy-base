@@ -1,4 +1,4 @@
-namespace Genzy.Base.Exceptions
+namespace GCL.Base.Exceptions
 {
     /// <summary>
     /// Stable string codes for API errors (distinct from HTTP status).

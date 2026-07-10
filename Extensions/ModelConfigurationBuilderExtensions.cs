@@ -1,7 +1,7 @@
-using Genzy.Base.Conventers;
+using GCL.Base.Conventers;
 using Microsoft.EntityFrameworkCore;
 
-namespace Genzy.Base.Extensions;
+namespace GCL.Base.Extensions;
 
 /// <summary>
 /// EF Core model configuration extensions.

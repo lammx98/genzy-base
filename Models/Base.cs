@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Genzy.Base.Models;
+namespace GCL.Base.Models;
 
 public class BaseModel
 {

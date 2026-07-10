@@ -1,4 +1,4 @@
-namespace Genzy.Base.Models;
+namespace GCL.Base.Models;
 
 /// <summary>Audit fields + tenant scope with optional system-wide catalog rows (<see cref="TenantId"/> null).</summary>
 public abstract class BaseTenantAudit2WithSharedRows : BaseAudit2, ITenantScopedWithSharedRows

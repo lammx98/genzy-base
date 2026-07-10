@@ -1,4 +1,4 @@
-namespace Genzy.Base.Models;
+namespace GCL.Base.Models;
 
 /// <summary>Audit fields + tenant scope (same <see cref="ITenantScoped"/> contract as <see cref="BaseTenant"/>).</summary>
 public abstract class BaseTenantAudit : BaseAudit, ITenantScoped

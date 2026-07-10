@@ -1,8 +1,8 @@
 using System.Data.Common;
-using Genzy.Base.Security;
+using GCL.Base.Security;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace Genzy.Base.Data;
+namespace GCL.Base.Data;
 
 /// <summary>
 /// Fails closed: any database command that returns data (reader/scalar) runs only when a tenant is present,

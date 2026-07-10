@@ -1,4 +1,4 @@
-namespace Genzy.Base.Security.Jwt;
+namespace GCL.Base.Security.Jwt;
 
 public class JwtOptions
 {

@@ -1,4 +1,4 @@
-namespace Genzy.Base.Data;
+namespace GCL.Base.Data;
 
 /// <summary>
 /// Async-local suppression of global tenant query filters and the <see cref="TenantContextRequiredCommandInterceptor"/> guard.

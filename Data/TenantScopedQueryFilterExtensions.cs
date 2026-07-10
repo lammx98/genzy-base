@@ -1,8 +1,8 @@
 using System.Reflection;
-using Genzy.Base.Models;
+using GCL.Base.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Genzy.Base.Data;
+namespace GCL.Base.Data;
 
 public static class TenantScopedQueryFilterExtensions
 {

@@ -1,4 +1,4 @@
-namespace Genzy.Base.Attributes;
+namespace GCL.Base.Attributes;
 
 /// <summary>
 /// Marks an enum property to be stored as int in the database.

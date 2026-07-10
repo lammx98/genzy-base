@@ -1,8 +1,8 @@
-using Genzy.Base.Models;
-using Genzy.Base.Security;
+using GCL.Base.Models;
+using GCL.Base.Security;
 using Microsoft.EntityFrameworkCore;
 
-namespace Genzy.Base.Data;
+namespace GCL.Base.Data;
 
 /// <summary>
 /// <see cref="BaseDbContext{T}"/> that automatically applies <see cref="DbContextAuditExtensions.ApplyAutomaticAuditFields"/> on save.

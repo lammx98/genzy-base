@@ -1,4 +1,4 @@
-namespace Genzy.Base.Models;
+namespace GCL.Base.Models;
 
 /// <summary>
 /// When applied to an <see cref="ITenantScoped"/> entity type, no global tenant query filter is registered for that type.

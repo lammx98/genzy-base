@@ -1,9 +1,9 @@
-using Genzy.Base.Data;
-using Genzy.Base.Exceptions;
-using Genzy.Base.Models;
-using Genzy.Base.Security;
+using GCL.Base.Data;
+using GCL.Base.Exceptions;
+using GCL.Base.Models;
+using GCL.Base.Security;
 
-namespace Genzy.Base.Services;
+namespace GCL.Base.Services;
 
 public abstract class BaseTenantService(IUserContext userContext)
 {

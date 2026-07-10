@@ -1,8 +1,8 @@
-using Genzy.Base.Models;
-using Genzy.Base.Security;
+using GCL.Base.Models;
+using GCL.Base.Security;
 using Microsoft.EntityFrameworkCore;
 
-namespace Genzy.Base.Data;
+namespace GCL.Base.Data;
 
 /// <summary>
 /// Optional automatic audit: <see cref="BaseAudit"/> / <see cref="BaseAudit2"/> timestamps and actor ids from <see cref="IUserContext"/>.

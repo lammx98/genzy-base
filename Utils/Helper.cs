@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace Genzy.Base.Utils;
+namespace GCL.Base.Utils;
 
 public static class Helper
 {

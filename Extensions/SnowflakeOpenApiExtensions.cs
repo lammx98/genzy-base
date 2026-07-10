@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Genzy.Base.Extensions;
+namespace GCL.Base.Extensions;
 
 /// <summary>
 /// OpenAPI / Swagger: document <see cref="ulong"/> Snowflake ids as JSON strings (same as <see cref="JsonServiceExtensions.AddUlongAsStringSerialization"/>).

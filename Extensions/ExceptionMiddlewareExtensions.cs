@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Genzy.Base.Middleware;
+using GCL.Base.Middleware;
 
-namespace Genzy.Base.Extensions
+namespace GCL.Base.Extensions
 {
     /// <summary>
     /// Extension methods for registering exception handling middleware

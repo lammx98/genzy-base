@@ -1,10 +1,10 @@
 using System.Reflection;
-using Genzy.Base.Attributes;
-using Genzy.Base.Converters;
+using GCL.Base.Attributes;
+using GCL.Base.Converters;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
-namespace Genzy.Base.Conventers;
+namespace GCL.Base.Conventers;
 
 /// <summary>
 /// Convention that applies SemicolonDelimitedStringArrayConverter to properties marked with [SemicolonDelimited].

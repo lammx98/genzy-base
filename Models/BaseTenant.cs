@@ -1,4 +1,4 @@
-namespace Genzy.Base.Models;
+namespace GCL.Base.Models;
 
 /// <summary>
 /// Primary key (<see cref="BaseModel.Id"/>) + tenant scope for shared-schema tables.

@@ -1,4 +1,4 @@
-namespace Genzy.Base.Exceptions
+namespace GCL.Base.Exceptions
 {
     public class ForbiddenException : AppException
     {

@@ -1,9 +1,9 @@
 using System.Reflection;
-using Genzy.Base.Attributes;
+using GCL.Base.Attributes;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
-namespace Genzy.Base.Conventers;
+namespace GCL.Base.Conventers;
 
 /// <summary>
 /// Convention that applies int conversion to properties marked with [StoredAsInt].

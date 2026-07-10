@@ -1,4 +1,4 @@
-namespace Genzy.Base.Extensions;
+namespace GCL.Base.Extensions;
 
 public static class StringExtensions
 {

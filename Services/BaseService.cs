@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Genzy.Base.Services
+namespace GCL.Base.Services
 {
     public class BaseService<TContext, T> : IBaseService<T>
         where TContext : DbContext

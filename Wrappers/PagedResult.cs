@@ -1,4 +1,4 @@
-namespace Genzy.Base.Wrappers;
+namespace GCL.Base.Wrappers;
 
 public sealed class PagedResult<T>
 {

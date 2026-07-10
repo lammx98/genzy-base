@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Genzy.Base.Utils
+namespace GCL.Base.Utils
 {
     public static class Extensions
     {

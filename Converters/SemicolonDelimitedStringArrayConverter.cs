@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Genzy.Base.Converters;
+namespace GCL.Base.Converters;
 
 /// <summary>
 /// Converts string[] to/from delimiter-separated string for DB storage.
